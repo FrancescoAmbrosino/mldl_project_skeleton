@@ -172,3 +172,10 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+# Data, weights, logs: never pushed
+data/*
+!data/.gitkeep
+checkpoints/*
+!checkpoints/.gitkeep
+wandb/
