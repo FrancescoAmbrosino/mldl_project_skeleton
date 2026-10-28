@@ -10,12 +10,12 @@ CHECKPOINT_PATH = 'checkpoints/customnet_best.pth'
 
 # Validation loop
 def validate(model, val_loader, criterion):
-    model.eval()
+    model.eval()  # BatchNorm uses its running statistics instead of the batch's
     val_loss = 0
 
     correct, total = 0, 0
 
-    with torch.no_grad():
+    with torch.no_grad():  # no graph for backward: less memory, faster
         for batch_idx, (inputs, targets) in enumerate(val_loader):
             inputs, targets = inputs.cuda(), targets.cuda()
 
@@ -27,6 +27,7 @@ def validate(model, val_loader, criterion):
             total += targets.size(0)
             correct += predicted.eq(targets).sum().item()
 
+    # Mean of the batch means: the last, smaller batch counts as much as a full one
     val_loss = val_loss / len(val_loader)
     val_accuracy = 100. * correct / total
 

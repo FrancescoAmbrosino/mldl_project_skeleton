@@ -6,6 +6,8 @@ class CustomNet(nn.Module):
     def __init__(self):
         super(CustomNet, self).__init__()
         # Define layers of the neural network
+        # 3 x 3 convs with padding=1 keep H x W, so only the pools change the size.
+        # bias=False: the BatchNorm right after each conv adds its own shift
         self.conv1 = nn.Conv2d(3, 64, kernel_size=3, padding=1, stride=1, bias=False)
         self.batch_norm1 = nn.BatchNorm2d(64)
         self.pool1 = nn.MaxPool2d(2)
@@ -14,7 +16,7 @@ class CustomNet(nn.Module):
         self.batch_norm2 = nn.BatchNorm2d(128)
         self.pool2 = nn.MaxPool2d(2)
 
-        self.conv3 = nn.Conv2d(128, 64, kernel_size=1, bias=False)
+        self.conv3 = nn.Conv2d(128, 64, kernel_size=1, bias=False)  # 1 x 1: mixes channels only (128 -> 64), so no padding
         self.batch_norm3 = nn.BatchNorm2d(64)
         self.pool3 = nn.MaxPool2d(2)
 
@@ -24,7 +26,7 @@ class CustomNet(nn.Module):
 
         self.conv5 = nn.Conv2d(64, 256, kernel_size=3, padding=1, stride=1, bias=False)
         self.batch_norm5 = nn.BatchNorm2d(256)
-        self.pool5 = nn.AdaptiveAvgPool2d(1)
+        self.pool5 = nn.AdaptiveAvgPool2d(1)  # global average: one value per channel, whatever the input size
 
         self.fc1 = nn.Linear(256, 200)      # 200 is the number of classes in TinyImageNet
 
