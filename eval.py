@@ -30,7 +30,7 @@ def validate(model, val_loader, criterion):
     val_loss = val_loss / len(val_loader)
     val_accuracy = 100. * correct / total
 
-    print(f'\nValidation - Loss: {val_loss:.6f} Acc: {val_accuracy:.2f}%')
+    print(f'Validation - Loss: {val_loss:.6f} Acc: {val_accuracy:.2f}%')
     return val_loss, val_accuracy
 
 
