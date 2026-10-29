@@ -29,8 +29,8 @@ def get_dataloaders(root='data/tiny-imagenet-200', batch_size=32):
     assert tiny_imagenet_dataset_val.class_to_idx == tiny_imagenet_dataset_train.class_to_idx, \
         'val/ is not split into class folders: run utils/download_dataset.py'
 
-    print(f"Length of train dataset: {len(tiny_imagenet_dataset_train)}")
-    print(f"Length of val dataset: {len(tiny_imagenet_dataset_val)}")
+    print(f"\nLength of train dataset: {len(tiny_imagenet_dataset_train)}")
+    print(f"Length of val dataset: {len(tiny_imagenet_dataset_val)}\n")
 
     # 2 worker processes prepare the batches in parallel and stay alive across epochs
     train_loader = torch.utils.data.DataLoader(tiny_imagenet_dataset_train, batch_size=batch_size, shuffle=True, num_workers=2, persistent_workers=True)
